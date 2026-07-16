@@ -1,0 +1,33 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 -- Business Question: Which customers are the most loyal repeat buyers, \
+-- based on how many distinct months they made a purchase?\
+-- Technique: Chained CTEs + window function (RANK())\
+\
+WITH customer_monthly_activity AS (\
+    SELECT\
+        customer_id,\
+        DATE_FORMAT(invoice_date, '%Y-%m') AS purchase_month\
+    FROM online_retail\
+    WHERE customer_id IS NOT NULL\
+    GROUP BY customer_id, DATE_FORMAT(invoice_date, '%Y-%m')\
+),\
+customer_active_months AS (\
+    SELECT\
+        customer_id,\
+        COUNT(*) AS active_months\
+    FROM customer_monthly_activity\
+    GROUP BY customer_id\
+)\
+SELECT\
+    customer_id,\
+    active_months,\
+    RANK() OVER (ORDER BY active_months DESC) AS loyalty_rank\
+FROM customer_active_months\
+ORDER BY active_months DESC\
+LIMIT 20;}
