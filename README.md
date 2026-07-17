@@ -29,4 +29,4 @@ UCI Machine Learning Repository — "Online Retail II" dataset.
 MySQL, Tableau (companion dashboard)
 
 ## Related
-- Tableau dashboard: (add link here)
+- Tableau dashboard: (https://public.tableau.com/views/Tableau_Sales_Dashboard_17841008520100/Dashboard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
